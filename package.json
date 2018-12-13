@@ -1,0 +1,27 @@
+{
+  "name": "shopify-node-react-proj",
+  "version": "1.0.0",
+  "description": "simple e commerce application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin226j/shopify-node-react-proj.git"
+  },
+  "author": "kevin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevin226j/shopify-node-react-proj/issues"
+  },
+  "homepage": "https://github.com/kevin226j/shopify-node-react-proj#readme",
+  "dependencies": {
+    "cookie": "^0.3.1",
+    "dotenv": "^6.2.0",
+    "nonce": "^1.0.4",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  }
+}
