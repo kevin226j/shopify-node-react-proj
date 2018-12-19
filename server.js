@@ -15,6 +15,20 @@ const forwardingAddres = process.env.NGROK_FORWARD_URL;
 const app = express();
 const port = 3000 || process.env.PORT;
 
+
+var shopifyAPI = require('shopify-node-api');
+ 
+ 
+var Shopify = new shopifyAPI({
+  shop: 'node-react-proj.myshopify.com', // MYSHOP.myshopify.com
+  shopify_api_key: apiKey, // Your API key
+  access_token: 'Kj894205384' // Your API password
+});
+
+
+
+
+
 app.get('/', (req,res) => {
     res.send('Hello World!');
 });
