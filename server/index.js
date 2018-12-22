@@ -1,3 +1,74 @@
+/*****************************************************************************
+ BUILDING REACT-NODE- SHOPIFY APP WITH KOA (WORKSHOP)
+*****************************************************************************/
+import dotenv from 'dotenv';
+import Koa from 'koa';
+import session from 'koa-session';
+import createShopifyAuth, {createVerifyRequest} from '@shopify/koa-shopify-auth';
+
+dotenv.config();
+
+const app = new Koa();
+app.use(session(app));
+
+const {SHOPIFY_API_KEY, SHOPIFY_API_SECRET_KEY} = process.env;
+
+app.use(
+    createShopifyAuth({
+        //shopify api set up
+        apiKey: SHOPIFY_API_KEY,
+        secret : SHOPIFY_API_SECRET_KEY,
+        //permissions
+        scopes: ['write_products'],
+        //custom logic after authentication is completed
+        afterAuth(ctx) {
+            const {shop, accessToken} = ctx.session;
+
+            console.log('We did it!', shop, accessToken);
+
+            ctx.redirect('/');
+        }
+    })
+)
+app.keys = [SHOPIFY_API_SECRET_KEY];
+
+app.use(createVerifyRequest());
+
+app.use(function index(ctx) {
+    console.log('Hello Unite 👋')
+    ctx.body = 'Hello Unite 👋';
+})
+
+export default app;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*****************************************************************************
+ GENERAL CONNECTION TO SHOPIFY API WITH EXPRESS 
+*****************************************************************************/
+
+ /*
 const dotenv = require('dotenv').config();
 const express = require('express');
 const crypto = require('crypto');
@@ -20,14 +91,10 @@ var shopifyAPI = require('shopify-node-api');
  
  
 var Shopify = new shopifyAPI({
-  shop: 'node-react-proj.myshopify.com', // MYSHOP.myshopify.com
+  shop: process.env.SHOPIFY_API_SHOP, // MYSHOP.myshopify.com
   shopify_api_key: apiKey, // Your API key
-  access_token: 'Kj894205384' // Your API password
+  access_token: process.env.SHOPIFY_API_PASSWORD // Your API password
 });
-
-
-
-
 
 app.get('/', (req,res) => {
     res.send('Hello World!');
@@ -125,9 +192,5 @@ app.get('/shopify/callback', (req, res) => {
     }
 
 })
-
-
-
-
-
 app.listen(port, ()=> console.log(`Listening on port ${port}`));
+*/
