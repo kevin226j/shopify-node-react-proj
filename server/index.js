@@ -5,11 +5,17 @@ import dotenv from 'dotenv';
 import Koa from 'koa';
 import session from 'koa-session';
 import createShopifyAuth, {createVerifyRequest} from '@shopify/koa-shopify-auth';
+import renderReactApp from './render-react-app';
+import webpack from 'koa-webpack';
+
 
 dotenv.config();
 
 const app = new Koa();
 app.use(session(app));
+
+var Router = require('koa-router');
+var router = Router({prefix: '/productListing'});
 
 const {SHOPIFY_API_KEY, SHOPIFY_API_SECRET_KEY} = process.env;
 
@@ -30,14 +36,17 @@ app.use(
         }
     })
 )
+console.log(SHOPIFY_API_SECRET_KEY, SHOPIFY_API_KEY);
+
 app.keys = [SHOPIFY_API_SECRET_KEY];
 
 app.use(createVerifyRequest());
 
-app.use(function index(ctx) {
-    console.log('Hello Unite 👋')
-    ctx.body = 'Hello Unite 👋';
-})
+app.use(renderReactApp);
+
+
+
+app.use(webpack());
 
 export default app;
 
